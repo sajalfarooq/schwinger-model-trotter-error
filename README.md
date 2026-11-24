@@ -2,7 +2,7 @@
 
 Can a digital quantum simulation predict particle production accurately while missing a larger error in the local electric field? This study compares a simulated quantum circuit with exact evolution on four- and six-site lattices. Reflection symmetry suppresses the leading error in mean particle density for the ordered first-order circuit. Individual electric links can retain that error.
 
-[Research report and references](report.md) · [Simulation methods](methods.md) · [Numerical results](data/)
+[Research report and references](schwinger-circuit-study/report.md) · [Simulation methods](schwinger-circuit-study/methods.md) · [Numerical results](schwinger-circuit-study/data)
 
 ## From a field theory to a measurable error
 
@@ -12,17 +12,17 @@ We compute the exact evolution of this finite system by diagonalizing its Hamilt
 
 ## Why density converges faster than local flux
 
-Reflecting the chain and flipping every spin preserves both the initial state and mean density. It also reverses the spatial order of the hopping gates. The leading error changes sign under this reversal, so it cancels for density. For flux the operation exchanges two mirror-image links, allowing either link to retain a leading error. We tested the predicted sign reversal on four and six sites at three masses. [Derivation and numerical checks](report.md)
+Reflecting the chain and flipping every spin preserves both the initial state and mean density. It also reverses the spatial order of the hopping gates. The leading error changes sign under this reversal, so it cancels for density. For flux the operation exchanges two mirror-image links, allowing either link to retain a leading error. We tested the predicted sign reversal on four and six sites at three masses. [Derivation and numerical checks](schwinger-circuit-study/report.md)
 
-![Maximum error versus circuit steps on four sites](figures/convergence.png)
+![Maximum error versus circuit steps on four sites](schwinger-circuit-study/figures/convergence.png)
 
 At four sites and mass-to-hopping ratio 0.5, increasing the step count from 32 to 64 reduced the maximum density error by a factor of 4.00 and the worst-link flux error by 2.04. The purple curve shows the flux error remaining after subtracting the commutator prediction. All results come from classical simulation.
 
 ## How much circuit depth helps under noise?
 
-![Maximum density error versus circuit depth. Ideal error falls at every depth. With 0.1% noise the minimum is at depth 73, and with 1% noise it is at depth 37.](figures/noise-depth.png)
+![Maximum density error versus circuit depth. Ideal error falls at every depth. With 0.1% noise the minimum is at depth 73, and with 1% noise it is at depth 37.](schwinger-circuit-study/figures/noise-depth.png)
 
-Each point gives the largest absolute density error across 20 nonzero times on four sites. Both axes use logarithmic scales. The noise percentage is the probability of applying a two-qubit depolarizing channel after each two-qubit rotation. At 0.1% noise, increasing depth from 73 to 289 raises the error from 0.0263 to 0.0696. For that same noise level, local flux reaches its smallest tested error at depth 145. The best depth therefore depends on which physical quantity the circuit must reproduce. [Full noise sweep](data/depth_noise.csv)
+Each point gives the largest absolute density error across 20 nonzero times on four sites. Both axes use logarithmic scales. The noise percentage is the probability of applying a two-qubit depolarizing channel after each two-qubit rotation. At 0.1% noise, increasing depth from 73 to 289 raises the error from 0.0263 to 0.0696. For that same noise level, local flux reaches its smallest tested error at depth 145. The best depth therefore depends on which physical quantity the circuit must reproduce. [Full noise sweep]([data/depth_noise.csv](https://github.com/sajalfarooq/schwinger-model-trotter-error/blob/main/depth_noise.csv))
 
 ## Accuracy at comparable gate cost
 
@@ -33,7 +33,7 @@ On six sites, both circuits below fit a budget of 320 two-qubit rotations. The s
 | First order | 16 | 320 | **0.002318** | 0.011086 |
 | Symmetric second order | 8 | 312 | 0.007127 | **0.006380** |
 
-These comparisons use open boundaries, finite lattices, and all-pairs connectivity. The error values describe this gate set and time window. Establishing hardware performance or quantum advantage would require a separate experiment. [Gate-budget data](data/formula_comparison.csv)
+These comparisons use open boundaries, finite lattices, and all-pairs connectivity. The error values describe this gate set and time window. Establishing hardware performance or quantum advantage would require a separate experiment. [Gate-budget data](schwinger-circuit-study/data/formula_comparison.csv)
 
 ## Reproduce the study
 
@@ -48,17 +48,17 @@ python src/response_study.py
 
 | Program | Outputs |
 |---|---|
-| Four-site exact evolution and gate noise | [Exact dynamics](data/exact_dynamics.csv), [depth and noise sweep](data/depth_noise.csv) |
-| First- and second-order comparison | [Two-qubit rotation budgets and observable errors](data/formula_comparison.csv) |
-| Leading-error prediction | [Response coefficients and residuals](data/response.csv), [convergence figure](figures/convergence.png) |
+| Four-site exact evolution and gate noise | [Exact dynamics](schwinger-circuit-study/data/exact_dynamics.csv), [depth and noise sweep](data/depth_noise.csv) |
+| First- and second-order comparison | [Two-qubit rotation budgets and observable errors](schwinger-circuit-study/data/formula_comparison.csv) |
+| Leading-error prediction | [Response coefficients and residuals](data/response.csv), [convergence figure](schwinger-circuit-study/figures/convergence.png) |
 
 The Python runs use deterministic state vectors and density matrices. They require no quantum hardware account. Optional [Wolfram Language scripts](wolfram/) provide a lattice check and a free-limit calculation. The latter requires FeynCalc.
 
-Presented by **Sajal Farooq**, 7th semester student. [Download the research presentation](Sajal-Farooq-Schwinger-study.pptx).
+Presented by **Sajal Farooq**, 7th semester student. [Download the research presentation](schwinger-circuit-study/Sajal-Farooq-Schwinger-study.pptx).
 
-The [independent free-limit check](src/check_free_limit.py) passed using explicit two-component Dirac matrices and exact Taylor coefficients. Run it with `python src/check_free_limit.py`. It verifies the mathematics of the optional FeynCalc example.
+The [independent free-limit check](schwinger-circuit-study/src/check_free_limit.py) passed using explicit two-component Dirac matrices and exact Taylor coefficients. Run it with `python src/check_free_limit.py`. It verifies the mathematics of the optional FeynCalc example.
 
-[Download the standalone Wolfram validation notebook](wolfram/Schwinger-validation.nb). Its four-site reference data are embedded. A separate [neutral-sector Taylor calculation](src/check_lattice.py) reproduced all 84 observable values with maximum absolute error 2.94e-15. Run `python src/check_lattice.py` to repeat the check.
+[Download the standalone Wolfram validation notebook](schwinger-circuit-study/wolfram/Schwinger-validation.nb). Its four-site reference data are embedded. A separate [neutral-sector Taylor calculation](schwinger-circuit-study/src/check_lattice.py) reproduced all 84 observable values with maximum absolute error 2.94e-15. Run `python src/check_lattice.py` to repeat the check.
 
 ## References
 
